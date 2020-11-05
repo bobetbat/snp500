@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.scss'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom'
+import routes from './routes'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface MatchParams {
 }
 
-export default App;
+const App: React.FC = () => {
+  return (
+    <div className="App">
+      <Router>
+        <Switch>
+          {routes.map(({ path, exact, component: Component, ...rest }) => (
+            <Route
+              key={path}
+              path={path}
+              exact={exact}
+              render={(props: MatchParams) => <Component {...props} {...rest} />}
+            />
+          ))}
+          {/* <Route component={NotFound} /> */}
+        </Switch>
+      </Router>
+    </div>
+  )
+}
+
+export default App
