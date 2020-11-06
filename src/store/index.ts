@@ -1,8 +1,10 @@
-import { observable } from 'mobx'
+import { observable, action } from 'mobx'
+import DataStore from './DataStore'
+import ApiStore from './ApiStore'
 
 class AppStore {
-  @observable customers = [{name: 'asd'}, {name: 'asd2'}]
-  @observable customer = {}
+  data = DataStore
+  api = ApiStore
 }
 
 export default new AppStore()

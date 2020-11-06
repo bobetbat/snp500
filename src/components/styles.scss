@@ -1,0 +1,30 @@
+.customersList {
+  max-width: 1200px;
+  background-color: #F7F9FB;
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 8px;
+  padding: 10px;
+  .grid {
+    display: grid;
+    .grid-title {
+      display: grid;
+      grid-auto-rows: 45px;
+      column-gap: 4rem;
+      grid-template-columns: 50px 212px 69px 52px 226px 206px;
+      align-items: center;
+    }
+    .grid-rows {
+      align-items: center;
+      grid-auto-rows: 90px;
+      grid-gap: 10px;
+      display: grid;
+      grid-template-columns: 50px 212px 69px 52px 226px 206px;
+      column-gap: 4rem;
+      border-top: 1px solid hsl(0, 0%, 80%);
+      border-radius: 8px;
+    }
+    .grid-rows:hover {
+      background: #fe7f662d;
+    }
+  }
+}

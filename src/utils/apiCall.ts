@@ -1,10 +1,24 @@
 import axios from 'axios'
-
-const apiCall = (path:string) => {
-  const url = `localhost:5000/${path}`
+type customer = {
+  id: string,
+  name: string,
+  surname: string,
+  created: string,
+}
+type responseCustomers = {
+  customers: customer[],
+  selection_settings: {
+    offset: number,
+    limit: number,
+    search: string
+  }
+}
+const apiCall = async (endpoint:string):Promise<any> => {
+  const url = `http://localhost:5000/${endpoint}`
   try {
-    const response = axios.get(url)
-    return response
+    const response: any = await axios.get(url)
+    console.log(response)
+    return response.data
   } catch (e) {
     console.error(e)
   }
