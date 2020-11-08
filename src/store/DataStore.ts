@@ -18,20 +18,14 @@ type responseCustomers = {
 }
 class DataStore {
   @observable customers:customer[] = []
-  @observable customer = true
+  @observable customer = {}
 
   @action 
   setCustomers = async () => {
     const res = await ApiStore.fetchCustomers()
     this.customers = res.customers
-    console.log('res', this.customers)
   }
 
-  @action
-  set = () => {
-    this.customer = false
-    console.log('cstmr', this.customer)
-  }
 }
 
 export default new DataStore()

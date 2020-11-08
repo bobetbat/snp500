@@ -1,15 +1,14 @@
 import React from 'react'
-import { useObserver } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import './styles.scss'
-import AppStore from '../store'
 import Customer from '../views/Customer'
 const titles = ['', 'Name', 'attribute', 'result', 'attribute created', 'user created']
 
 
-const CustomerList = () => {
-  const customers = AppStore.data.customers
-  
-  if (customers.length === 0) return <div></div>
+const CustomerList = (props:any) => {
+  console.log('asd', props)
+
+  if (props.store.data.customers.length === 0) return <div></div>
 
   return (
     <div className="customersList">
@@ -17,7 +16,7 @@ const CustomerList = () => {
         <div className="grid-title">
           {titles.map(title => <div key={title}>{title}</div>)}
         </div>
-        {customers.map((customer, i) => (
+        {props.store.data.customers.map((customer:any, i:number) => (
           <div key={i} className="grid-rows">
             <img />
             <div>{i}</div>
@@ -33,4 +32,4 @@ const CustomerList = () => {
 }
 
 
-export default CustomerList
+export default inject('store')(observer(CustomerList))
