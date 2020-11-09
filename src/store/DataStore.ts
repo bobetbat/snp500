@@ -48,6 +48,12 @@ class DataStore {
     const res = await ApiStore.fetchEvents()
     this.events = res
   }
+
+  @action 
+  setCustomerEvents = async (id :string) => {
+    const res = await ApiStore.fetchCustomerEvents(id)
+    this.customerEvents = res
+  }
 }
 
 export default new DataStore()

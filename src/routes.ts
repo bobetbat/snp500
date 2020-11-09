@@ -10,7 +10,7 @@ const routes = [
     })
   },
   {
-    path: '/:id',
+    path: '/customers/:id',
     exact: true,
     component: loadable({
       loader: () => import('./views/Customer'),
