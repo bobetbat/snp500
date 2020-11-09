@@ -6,7 +6,7 @@ const Customer = () => {
   return (
     <div className="customerView">
       <div>
-
+        
       </div>
       <div></div>
     </div>
