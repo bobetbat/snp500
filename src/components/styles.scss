@@ -4,6 +4,9 @@
   border: 1px solid hsl(0, 0%, 80%);
   border-radius: 8px;
   padding: 10px;
+  box-shadow: 0px 1px 2px 0px #00000009;
+  box-shadow: 0px 3px 6px 0px #00000009;
+
   .grid {
     display: grid;
     .grid-title {
@@ -20,8 +23,14 @@
       display: grid;
       grid-template-columns: 50px 212px 69px 52px 226px 206px;
       column-gap: 4rem;
-      border-top: 1px solid hsl(0, 0%, 80%);
       border-radius: 8px;
+    }
+    .border {
+      content: '';
+      width: 1160px;
+      height: 1px;
+      margin: 0 10px;
+      background: hsl(0, 0%, 80%);
     }
     .grid-rows:hover {
       background: #fe7f662d;
