@@ -2,7 +2,7 @@ import React from 'react'
 import { observer, inject } from 'mobx-react'
 import './styles.scss'
 import Customer from '../views/Customer'
-import { NavLink } from 'react-router-dom'
+import ListItem from './ListItem'
 const titles = ['', 'Name', 'attribute', 'result', 'attribute created', 'user created']
 
 
@@ -17,15 +17,11 @@ const CustomerList = (props:any) => {
         <div className="grid-title">
           {titles.map(title => <div key={title}>{title}</div>)}
         </div>
-        {props.store.data.customers.map((customer:any, i:number) => (
-          <NavLink to={`/customers/${customer.id}`} key={i} className="grid-rows">
-            <img />
-            <div>{i}</div>
-            <div>-</div>
-            <div>-</div>
-            <div>-</div>
-            <div>{customer.name}</div>
-          </NavLink>
+        {props.store.data.customers.map((customer:any) => (
+          <ListItem 
+            key={customer.id} 
+            id={customer.id}
+          />
         ))}
       </div>
     </div>
