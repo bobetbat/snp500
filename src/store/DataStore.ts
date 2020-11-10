@@ -36,7 +36,7 @@ class DataStore {
   @observable events:event[] = []
   @observable customerEvents:customerEvent[] = []
   @observable sources:source[] = []
-
+  @observable loading: boolean = false
   @action 
   setCustomers = async () => {
     const res = await ApiStore.fetchCustomers()
@@ -45,23 +45,29 @@ class DataStore {
 
   @action 
   setEvents = async () => {
+    this.loading = true
     const res = await ApiStore.fetchEvents()
     this.events = res.events
+    this.loading = false
   }
 
   @action 
   setCustomerEvents = async () => {
     const path = window.location.pathname.match(/^\/customers\/([A-zA-Z\d]+)/)
     const id = path ? path[1] : ''
+    this.loading = true
 
     const res = await ApiStore.fetchCustomerEvents(id)
     this.customerEvents = res.customer_events
+    this.loading = false
   }
 
   @action 
   setSources = async () => {
+    this.loading = true
     const res = await ApiStore.fetchSources()
     this.sources = res.sources
+    this.loading = false
   }
 
   @computed 
