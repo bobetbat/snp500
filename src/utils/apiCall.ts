@@ -20,7 +20,7 @@ const apiCall = async (endpoint:string):Promise<any> => {
     console.log(response)
     return response.data
   } catch (e) {
-    console.error(e)
+    throw e
   }
 }
 
