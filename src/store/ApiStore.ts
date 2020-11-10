@@ -16,7 +16,7 @@ export type responseEvents = {
 }
 
 export type responseCustomerEvents = {
-  customerEvents: customerEvent[]
+  customer_events: customerEvent[]
 }
 
 export type responseSources = {
@@ -36,7 +36,7 @@ class ApiStore {
   fetchEvents = ():Promise<responseEvents> => apiCall('events')
 
   @action 
-  fetchCustomerEvents = (id:string):Promise<responseCustomerEvents> => apiCall(`customers/${id}`)
+  fetchCustomerEvents = (id:string):Promise<responseCustomerEvents> => apiCall(`customers/${id}/events`)
     
   @action 
   fetchSources = ():Promise<responseSources> => apiCall('sources')
