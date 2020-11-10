@@ -11,19 +11,30 @@ const Customer = (props:any) => {
     AppStore.data.setCustomerEvents()
     AppStore.data.setSources()
   }, [])
-  
-  if (props.store.data.loading) return <Loading />
-  
-  const { events, sources } = props.store.data
 
+  if (props.store.data.loading) return <Loading />
+
+  const { events, sources, customerById, idFromPath, customerEvents } = props.store.data
+  const customer = customerById(idFromPath())
   return (
     <div className="customerView">
       <div className='header'>
-        <div>as</div>
-        <div>{sources.map( (s:any) => <div key={s.id}>{s.id}</div>)}</div>
+        <div className='title'>{customer && `${customer.name} ${customer.surname}`}</div>
+        <div className="sources">{sources.map( (s:any) => 
+          <div className="tab" key={s.id}>
+            <img src={`/img/source_logos/${s.frontend_settings.icon}`} />
+            <div>{s.name}</div>
+          </div>
+        )}</div>
       </div>
       <div>
-        {events.map( (e:any) => <div key={e.id}>{e.id}</div>)}
+        {events.map( (e:any) => 
+          <div key={e.id}>
+            {/* <img src={`/img/source_logos/${e.frontend_settings.icon}`}/> */}
+            <div>{e.title}</div>
+            <div>{e.datetime}</div>
+          </div>
+        )}
       </div>
       <div></div>
     </div>
