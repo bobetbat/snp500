@@ -11,6 +11,20 @@ export type responseCustomers = {
   }
 }
 
+export type responseEvents = {
+  events: event[]
+}
+
+export type responseCustomerEvents = {
+  customerEvents: customerEvent[]
+}
+
+export type responseSources = {
+  sources: source[]
+}
+
+
+
 class ApiStore {
   @action 
   fetchCustomers = ():Promise<responseCustomers> => apiCall('customers')
@@ -19,13 +33,13 @@ class ApiStore {
   fetchCustomerById = (id:string):Promise<customer> => apiCall(`customers/${id}`)
 
   @action 
-  fetchEvents = ():Promise<event[]> => apiCall('events')
+  fetchEvents = ():Promise<responseEvents> => apiCall('events')
 
   @action 
-  fetchCustomerEvents = (id:string):Promise<customerEvent[]> => apiCall(`customers/${id}`)
+  fetchCustomerEvents = (id:string):Promise<responseCustomerEvents> => apiCall(`customers/${id}`)
     
   @action 
-  fetchSources = ():Promise<source[]> => apiCall('sources')
+  fetchSources = ():Promise<responseSources> => apiCall('sources')
 }
 
 export default new ApiStore()
