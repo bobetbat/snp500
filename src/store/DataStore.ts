@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import apiCall from '../utils/apiCall'
 import ApiStore from './ApiStore'
 
@@ -46,13 +46,18 @@ class DataStore {
   @action 
   setEvents = async () => {
     const res = await ApiStore.fetchEvents()
-    this.events = res
+    this.events = res.events
   }
 
   @action 
   setCustomerEvents = async (id :string) => {
     const res = await ApiStore.fetchCustomerEvents(id)
-    this.customerEvents = res
+    this.customerEvents = res.customerEvents
+  }
+
+  @computed 
+  get getEvents() {
+    return this.events
   }
 }
 
