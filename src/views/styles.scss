@@ -59,6 +59,7 @@
       grid-template-columns: 30px 340px 150px;
       background: #fff;
       padding: 0 17px;
+      margin-top: 30px;
       width: 524px;
       height: 54px;
       text-align: start;
@@ -81,11 +82,15 @@
       }
     }
     .eventGroupList {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
       .eventGroup {
         display: flex;
         // grid-template-columns: 30px 340px 150px;
         flex-direction: row;
-        
+        margin-top: 30px;
         background: #fff;
         padding: 0 17px;
         width: 524px;
@@ -94,17 +99,35 @@
         align-items: center;
         border: 1px solid hsl(0, 0%, 80%);
         border-radius: 8px;
-        .smallEvent {
-          display: grid;
-          grid-template-columns: 30px 340px 150px;
-          background: #fff;
-          padding: 0 17px;
-          width: 524px;
-          height: 54px;
-          text-align: start;
-          align-items: center;
-          border: 1px solid hsl(0, 0%, 80%);
-          border-radius: 8px;
+      }
+      .hidden {
+        display: none;
+      }
+      .smallEvent {
+        display: grid;
+        grid-template-columns: 25px 290px 110px;
+        background: #fff;
+        padding: 0 10px;
+        margin-top: 15px;
+        width: 443px;
+        height: 42px;
+        text-align: start;
+        align-items: center;
+        border: 1px solid hsl(0, 0%, 80%);
+        border-radius: 8px;
+        div {
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 17px;
+        }
+        span {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 15px;
+          color: #999999;
+        }
+        img {
+          height: 20px;
         }
       }
     }

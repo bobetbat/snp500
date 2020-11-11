@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState} from 'react'
 import { observer, inject } from 'mobx-react'
 import { source, parsed } from '../store/DataStore'
 import './styles.scss'
@@ -8,7 +8,7 @@ const Customer = (props:any) => {
   useEffect(() => {
     props.store.data.init()
   }, [])
-
+  const [hidden, setHidden] = useState(false)
   if (props.store.data.loading) return <Loading />
 
   const { events, sources, customerById, idFromPath, parsed, parsedCustomerEvents } = props.store.data
@@ -19,8 +19,8 @@ const Customer = (props:any) => {
     <div className="customerView">
       <div className='header'>
         <div className='title'>{customer && `${customer.name} ${customer.surname}`}</div>
-        <div className="sources">{sources.map( (s:any) => 
-          <div className="tab" key={s.id}>
+        <div className="sources">{sources.map( (s:any, i:number) => 
+          <div className="tab" key={i}>
             <img src={`/img/source_logos/${s.frontend_settings.icon}`} />
             <div>{s.name}</div>
           </div>
@@ -37,13 +37,15 @@ const Customer = (props:any) => {
           ):
             <div className="eventGroupList">
               <div className="eventGroup">
-
-                {eventGroup.map((event:parsed, k:number) => {
-                  <div className="smallEvent" key={k}>hello</div>
-                  
-                })}
-                <button>s</button>
+                <button onClick={() => setHidden(!hidden)}>s</button>
               </div>
+              {eventGroup.map((event:any, k:number) => 
+                <div className={hidden ? 'hidden' : 'smallEvent'} key={k}>
+                  <img src={`/img/source_logos/${event.icon}`}/>
+                  <div>{event.title}</div>
+                  <span>{event.date}</span>
+                </div>
+              )}
             </div>
         )}
       </div>
