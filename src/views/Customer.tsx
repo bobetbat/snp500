@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { observer, inject } from 'mobx-react'
-import { source } from '../store/DataStore'
+import { source, parsed } from '../store/DataStore'
 import './styles.scss'
 import Loading from '../components/Loading'
 
@@ -11,9 +11,10 @@ const Customer = (props:any) => {
 
   if (props.store.data.loading) return <Loading />
 
-  const { events, sources, customerById, idFromPath, parsed, parseEventGroups } = props.store.data
+  const { events, sources, customerById, idFromPath, parsed, parsedCustomerEvents } = props.store.data
   const customer = customerById(idFromPath())
-  // parseEventGroups()
+  // const parsedEvents = parsedCustomerEvents()
+  // console.log('asd', parsedEvents)
   return (
     <div className="customerView">
       <div className='header'>
@@ -26,18 +27,25 @@ const Customer = (props:any) => {
         )}</div>
       </div>
       <div className='eventList'>
-        {/* {parsed.map( (e:any) => 
-          (typeof e == 'object') ? (
-            <div key={e.id} className="event">
-              <img src={`/img/source_logos/${e.icon}`}/>
-              <div>{e.title}</div>
-              <span>{e.date}</span>
+        {parsed.map( (eventGroup:parsed[], i:number) => 
+          (eventGroup.length == 1) ? (
+            <div key={i} className="event">
+              <img src={`/img/source_logos/${eventGroup[0].icon}`}/>
+              <div>{eventGroup[0].title}</div>
+              <span>{eventGroup[0].date}</span>
             </div>
           ):
-            <div className="event">
-              hello
+            <div className="eventGroupList">
+              <div className="eventGroup">
+
+                {eventGroup.map((event:parsed, k:number) => {
+                  <div className="smallEvent" key={k}>hello</div>
+                  
+                })}
+                <button>s</button>
+              </div>
             </div>
-        )} */}
+        )}
       </div>
       <div></div>
     </div>

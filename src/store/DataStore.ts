@@ -69,11 +69,11 @@ const localCustomerEvents = [
   {
     id: 33,
     event_id: 'website_page_view',
-    datetime: new Date('2020-10-19T12:22:33.123Z')
+    datetime: new Date('2020-10-20T12:22:33.123Z')
   }
 ]
 
-type parsed = {
+export type parsed = {
   date: string,
   title: string,
   short_title: string,
@@ -86,7 +86,7 @@ class DataStore {
   @observable customerEvents:customerEvent[] = localCustomerEvents
   @observable sources:source[] = []
   @observable loading: boolean = false
-  // @observable parsed:parsed[][] = []
+  @observable parsed:parsed[][] = []
   @action 
   setCustomers = async () => {
     this.loading = true
@@ -107,7 +107,7 @@ class DataStore {
     // await this.setCustomerEvents()
     await this.setSources()
     this.loading = false
-    this.parsedCustomerEvents()
+    this.parsed = await this.parsedCustomerEvents()
   }
 
   @action
@@ -126,7 +126,7 @@ class DataStore {
   }
 
   @action
-  parsedCustomerEvents = async () => {
+  parsedCustomerEvents = async ():Promise<parsed[][]> => {
     let events:parsed[] = []
     this.customerEvents.map( e => {
       const event = this.findEventById(e.event_id)

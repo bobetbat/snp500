@@ -80,6 +80,34 @@
         height: 20px;
       }
     }
+    .eventGroupList {
+      .eventGroup {
+        display: flex;
+        // grid-template-columns: 30px 340px 150px;
+        flex-direction: row;
+        
+        background: #fff;
+        padding: 0 17px;
+        width: 524px;
+        height: 98px;
+        text-align: start;
+        align-items: center;
+        border: 1px solid hsl(0, 0%, 80%);
+        border-radius: 8px;
+        .smallEvent {
+          display: grid;
+          grid-template-columns: 30px 340px 150px;
+          background: #fff;
+          padding: 0 17px;
+          width: 524px;
+          height: 54px;
+          text-align: start;
+          align-items: center;
+          border: 1px solid hsl(0, 0%, 80%);
+          border-radius: 8px;
+        }
+      }
+    }
   }
   .header {
     display: flex;
