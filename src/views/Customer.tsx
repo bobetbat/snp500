@@ -2,19 +2,16 @@ import React, { useEffect } from 'react'
 import { observer, inject } from 'mobx-react'
 import { source } from '../store/DataStore'
 import './styles.scss'
-import AppStore from './../store'
 import Loading from '../components/Loading'
 
 const Customer = (props:any) => {
   useEffect(() => {
-    AppStore.data.setEvents()
-    AppStore.data.setCustomerEvents()
-    AppStore.data.setSources()
+    props.store.data.init()
   }, [])
 
   if (props.store.data.loading) return <Loading />
 
-  const { events, sources, customerById, idFromPath, customerEvents } = props.store.data
+  const { events, sources, customerById, idFromPath, parsed } = props.store.data
   const customer = customerById(idFromPath())
   return (
     <div className="customerView">
@@ -27,13 +24,18 @@ const Customer = (props:any) => {
           </div>
         )}</div>
       </div>
-      <div>
-        {events.map( (e:any) => 
-          <div key={e.id}>
-            {/* <img src={`/img/source_logos/${e.frontend_settings.icon}`}/> */}
-            <div>{e.title}</div>
-            <div>{e.datetime}</div>
-          </div>
+      <div className='eventList'>
+        {parsed.map( (e:any) => 
+          (typeof e == 'object') ? (
+            <div key={e.id} className="event">
+              <img src={`/img/source_logos/${e.icon}`}/>
+              <div>{e.title}</div>
+              <span>{e.date}</span>
+            </div>
+          ):
+            <div className="event">
+              hello
+            </div>
         )}
       </div>
       <div></div>

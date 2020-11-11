@@ -78,7 +78,7 @@ class DataStore {
   @observable customerEvents:customerEvent[] = localCustomerEvents
   @observable sources:source[] = []
   @observable loading: boolean = false
-
+  @observable parsed:any = []
   @action 
   setCustomers = async () => {
     this.loading = true
@@ -89,31 +89,44 @@ class DataStore {
 
   @action 
   setEvents = async () => {
-    this.loading = true
     const res = await ApiStore.fetchEvents()
     this.events = res.events
-    this.loading = false
   }
-  // @computed
-  // parsedCustomerEvents = () => {
-  //   let events
-  //   // let eventGroup 
-  //   this.customerEvents.map( e => {
-  //     const event = this.findEventById(e.event_id)
-  //     if (event) {
-  //       const source = this.findSourceById(event.source_id)
-  //       let parsedEvent = {
-  //         date: e.datetime,
-  //         title: event.title,
-  //         short_title: event.short_title,
-  //         icon: source?.frontend_settings.icon,
-  //         color: source?.frontend_settings.color
-  //       }
-  //       events.push(parsedEvent)
-  //     }
-  //   })
-  //   console.log('a', events)
-  // }
+  @action 
+  init = async () => {
+    this.loading = true
+    await this.setEvents()
+    // await this.setCustomerEvents()
+    await this.setSources()
+    this.loading = false
+    this.parsedCustomerEvents()
+  }
+
+  @action
+  parsedCustomerEvents = () => {
+    let events
+    // let eventGroup 
+    this.customerEvents.map( e => {
+      console.log('events', e)
+      const event = this.findEventById(e.event_id)
+      if (event) {
+        const source = this.findSourceById(event.source_id)
+        if (source) {
+          let parsedEvent = {
+            date: e.datetime,
+            title: event.title,
+            short_title: event.short_title,
+            icon: source?.frontend_settings.icon,
+            color: source?.frontend_settings.color
+          }
+          console.log('parsed', parsedEvent)
+          this.parsed.push(parsedEvent)
+        }
+      }
+    })
+    // console.log('parsed', this.parsed)
+  }
+
   @action
   findSourceById = (id:string):source | undefined => {
     const sources = this.sources.find( s => s.id === id)
@@ -125,7 +138,7 @@ class DataStore {
     const event = this.events.find( e => e.id === id)
     return event
   }
-  
+
   @action 
   idFromPath = () => {
     const path = window.location.pathname.match(/^\/customers\/([A-zA-Z\d]+)/)
@@ -135,18 +148,14 @@ class DataStore {
 
   @action 
   setCustomerEvents = async () => {
-    this.loading = true
     const res = await ApiStore.fetchCustomerEvents(this.idFromPath())
     this.customerEvents = res.customer_events
-    this.loading = false
   }
 
   @action 
   setSources = async () => {
-    this.loading = true
     const res = await ApiStore.fetchSources()
     this.sources = res.sources
-    this.loading = false
   }
 
   @action
