@@ -11,8 +11,9 @@ const Customer = (props:any) => {
 
   if (props.store.data.loading) return <Loading />
 
-  const { events, sources, customerById, idFromPath, parsed } = props.store.data
+  const { events, sources, customerById, idFromPath, parsed, parseEventGroups } = props.store.data
   const customer = customerById(idFromPath())
+  // parseEventGroups()
   return (
     <div className="customerView">
       <div className='header'>
@@ -25,7 +26,7 @@ const Customer = (props:any) => {
         )}</div>
       </div>
       <div className='eventList'>
-        {parsed.map( (e:any) => 
+        {/* {parsed.map( (e:any) => 
           (typeof e == 'object') ? (
             <div key={e.id} className="event">
               <img src={`/img/source_logos/${e.icon}`}/>
@@ -36,7 +37,7 @@ const Customer = (props:any) => {
             <div className="event">
               hello
             </div>
-        )}
+        )} */}
       </div>
       <div></div>
     </div>

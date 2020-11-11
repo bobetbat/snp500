@@ -12,7 +12,7 @@ export type customer = {
 export type customerEvent = {
   id: number,
   event_id: string,
-  datetime: string
+  datetime: Date
 }
 
 export type event = {
@@ -34,51 +34,59 @@ const localCustomerEvents = [
   {
     id: 2,
     event_id: 'website_ad_clicked',
-    datetime: '2020-10-18T12:22:33.123Z'
+    datetime: new Date('2020-10-18T12:22:33.123Z')
   },
   {
     id: 3,
     event_id: 'website_page_view',
-    datetime: '2020-10-19T20:22:33.123Z'
+    datetime: new Date('2020-10-18T12:22:33.123Z')
   },
   {
     id: 12,
     event_id: 'website_ad_clicked',
-    datetime: '2020-10-18T12:22:33.123Z'
+    datetime: new Date('2020-10-18T12:22:33.123Z')
   },
   {
     id: 13,
     event_id: 'website_page_view',
-    datetime: '2020-10-19T20:22:33.123Z'
+    datetime: new Date('2020-10-18T12:22:33.123Z')
   },
   {
     id: 22,
     event_id: 'website_ad_clicked',
-    datetime: '2020-10-18T12:22:33.123Z'
+    datetime: new Date('2020-10-18T12:22:33.123Z')
   },
   {
     id: 23,
     event_id: 'website_page_view',
-    datetime: '2020-10-19T20:22:33.123Z'
+    datetime: new Date('2020-10-19T12:22:33.123Z')
   },
   {
     id: 32,
     event_id: 'website_ad_clicked',
-    datetime: '2020-10-18T12:22:33.123Z'
+    datetime: new Date('2020-10-19T12:22:33.123Z')
   },
   {
     id: 33,
     event_id: 'website_page_view',
-    datetime: '2020-10-19T20:22:33.123Z'
+    datetime: new Date('2020-10-19T12:22:33.123Z')
   }
 ]
+
+type parsed = {
+  date: string,
+  title: string,
+  short_title: string,
+  icon: string,
+  color: string
+}
 class DataStore {
   @observable customers:customer[] = []
   @observable events:event[] = []
   @observable customerEvents:customerEvent[] = localCustomerEvents
   @observable sources:source[] = []
   @observable loading: boolean = false
-  @observable parsed:any = []
+  // @observable parsed:parsed[][] = []
   @action 
   setCustomers = async () => {
     this.loading = true
@@ -103,28 +111,40 @@ class DataStore {
   }
 
   @action
-  parsedCustomerEvents = () => {
-    let events
-    // let eventGroup 
+  parseEventGroups = (data:parsed[]): parsed[][] => {
+    const result = data.reduce(function (hash) {
+      return function (r:any, o:any) {
+        if (!hash[o.date]) {
+          hash[o.date] = []
+          r.push(hash[o.date])
+        }
+        hash[o.date].push(o)
+        return r
+      }
+    }(Object.create(null)), [])
+    return result
+  }
+
+  @action
+  parsedCustomerEvents = async () => {
+    let events:parsed[] = []
     this.customerEvents.map( e => {
-      console.log('events', e)
       const event = this.findEventById(e.event_id)
       if (event) {
         const source = this.findSourceById(event.source_id)
         if (source) {
-          let parsedEvent = {
-            date: e.datetime,
+          let parsedEvent:parsed = {
+            date: e.datetime.toDateString(),
             title: event.title,
             short_title: event.short_title,
             icon: source?.frontend_settings.icon,
             color: source?.frontend_settings.color
           }
-          console.log('parsed', parsedEvent)
-          this.parsed.push(parsedEvent)
+          events.push(parsedEvent)
         }
       }
     })
-    // console.log('parsed', this.parsed)
+    return this.parseEventGroups(events)
   }
 
   @action
