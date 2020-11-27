@@ -7,8 +7,7 @@ import {
 } from 'react-router-dom'
 import routes from './routes'
 
-interface MatchParams {
-}
+interface MatchParams {}
 
 const App: React.FC = () => {
   return (

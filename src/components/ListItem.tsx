@@ -1,7 +1,5 @@
 import React from 'react'
-import Customer from '../views/Customer'
 import { NavLink } from 'react-router-dom'
-import { customer } from '../store/DataStore'
 import './styles.scss'
 
 const ListItem = ({id, key}:{id:string, key:string}) => {

@@ -8,14 +8,6 @@ const routes = [
       loader: () => import('./views/Main'),
       loading: Loading
     })
-  },
-  {
-    path: '/customers/:id',
-    exact: true,
-    component: loadable({
-      loader: () => import('./views/Customer'),
-      loading: Loading
-    })
   }
 ]
 export default routes
